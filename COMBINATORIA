@@ -1,0 +1,5 @@
+int COMB (int x, int n)
+{
+    
+    return (FACTORIAL(n))/(FACTORIAL(x)*FACTORIAL(n-x));
+}
