@@ -1,0 +1,22 @@
+int MCD (int a, int b)
+{
+    int r, aux;
+    
+    if(a<b)
+    {
+        aux = a;
+        a = b;
+        b = aux;
+        
+    }
+    
+    while (b!=0)
+    {
+        r = a % b;
+        a = b;
+        b = r;
+        
+    }
+    
+    return a;
+}
