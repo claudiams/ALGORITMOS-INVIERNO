@@ -1,0 +1,94 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include "math.h"
+# define MAX 100
+# define iva 0.13
+# define afp 0.121
+
+
+
+using namespace std;
+
+void Cargar_V(int COD[], float SB[], int n);
+void SalNeto_V (float SB[], float SN[], int N);
+void Bumble_Sort(int COD[], float SB[], int N);
+float Suma_V (float A[], int N);
+void Swap (float &a, float &b);
+
+
+int main ()
+{
+    int i, N, COD[MAX];
+    float SB[MAX], SN[MAX], PromSb, PromSn, SbTotal, SnTotal;
+    do
+    {
+        cout << "Digite el numero de empleados: ";
+        cin >> N;
+        
+    }while((N>100)||(N<=0));
+    
+    Cargar_V(COD, SB, N);
+    Bumble_Sort(COD, SB, N);
+    SalNeto_V(SB, SN, N);
+    SbTotal = Suma_V(SB, N);
+    SnTotal = Suma_V(SN, N);
+    PromSb = SbTotal/N;
+    PromSn = SnTotal/N;
+    cout << "------Planilla Sueldos------\n";
+    cout <<"N.-\t Cod\tS. Bruto\tS. Neto\n";
+    for(i=0;i<N;i++)
+        cout << i+1 << "   \t" << COD[i] << "    \t" << SB[i] << "     \t" << SN[i] << endl;
+    
+    
+    
+    
+    return 0;
+}
+
+
+void Cargar_V(int COD[], float SB[], int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        cout << "Digite el codigo: ";
+        cin >> COD[i];
+        cout << "Digite el salario bruto: ";
+        cin >> SB[i];
+    }
+
+}
+
+void SalNeto_V (float SB[], float SN[], int N)
+{
+   
+    for(int i=0;i<N;i++)
+    {
+        if(SB[i]>2800)
+            SN[i] = SB[i]*(1-afp-iva);
+        else
+            SN[i]=SB[i];
+    }
+}
+    
+void Bumble_Sort(int COD[], float SB[], int N)
+{
+    for(int i=0;i<N-1;i++)
+        for(int j=i;j<N;j++)
+            if(COD[j]<COD[j+1])
+            {
+                swap(COD[j], COD[j+1]);
+                swap(SB[j], SB[j+1]);
+                
+            }
+        
+}
+
+
+float Suma_V (float A[], int N)
+{
+    float s=0.0;
+    for(int i=0;i<N;s+=A[i],i++ );
+    return s;
+}
