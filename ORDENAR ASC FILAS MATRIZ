@@ -1,0 +1,18 @@
+void OrdAsc_Filas (float Matriz[ROW][COL],int n, int m)
+{
+    int i, j , k;
+    float aux;
+    for(i=0;i<n;i++)
+        for(j=0;j<m;j++)
+            for(k=j;j<m;j++)
+                if(Matriz[i][j]>Matriz[i][k])
+                {
+                    aux = Matriz[i][j];
+                    Matriz[i][j]=Matriz[i][k];
+                    Matriz[i][k]=aux;
+                }
+
+    
+    
+    
+}
