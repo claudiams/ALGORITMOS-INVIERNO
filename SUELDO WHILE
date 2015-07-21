@@ -1,0 +1,33 @@
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+# define iva 0.13
+# define afp 0.121
+# define SalMin 1480
+
+using namespace std;
+
+int main ()
+{
+    int sb, n, i=1;
+    float sn;
+    
+    cout << "Ingrese el numero de empleados: ";
+    cin >> n;
+    
+    while (i<=n)
+    {
+        cout << "Ingrese el salario bruto: ";
+        cin >> sb;
+        
+        if (sb<(2*SalMin))
+            sn = sb*(1-iva);
+        else
+            sn = sb * (1-iva-afp);
+        
+        cout << "El salario neto es: " << sn << endl;
+        i++;
+    }
+    return 0;
+}
