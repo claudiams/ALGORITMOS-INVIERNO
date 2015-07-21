@@ -1,0 +1,109 @@
+#include "stdafx.h"
+#include "conio.h"
+#include "stdlib.h"
+#include <iostream>
+
+
+using namespace std;
+
+void MENU ();
+void Triangulo ();
+void Mayor ();
+bool Primo ();
+
+int main ()
+{
+    
+    int opc;
+    
+    do
+    {
+        MENU();
+        cout << "Digite la opcion: ";
+        cin >> opc;
+        switch (opc)
+        {
+            case 1 :
+                Triangulo();
+                break;
+            case 2 :
+                Mayor();
+                break;
+            case 3 :
+                if (Primo())
+                    cout << "El numero si es primo" << endl;
+                else
+                    cout << "El numero no es primo" << endl;
+                break;
+                
+            default:
+                cout << "Salir" << endl;
+                break;
+        }
+        getchar();
+      
+        
+    }while(opc!=4);
+    
+    
+    return 0;
+}
+
+
+void MENU ()
+{
+    cout << "MENU\n";
+    cout << "----\n";
+    cout << "1) Area de un Triangulo\n";
+    cout << "2) El mayor de 3 numeros\n";
+    cout << "3) Verificar si un nro es primo\n";
+    cout << "4) Salir\n";
+    
+}
+
+void Triangulo ()
+{
+    int h, b;
+    cout << "Ingrese la base: ";
+    cin >> b;
+    cout << "Ingrese la altura: ";
+    cin >> h;
+    cout <<"El area es: " << (float)(b*h)/2<< endl;
+    
+}
+
+void Mayor ()
+{
+    int a, b, c , mayor;
+    cout<< "Digite 3 numeros: ";
+    cin >> a >> b >> c;
+    
+    if(a>b)
+        if(a>c)
+            mayor = a;
+        else
+            mayor = c;
+    else
+        if (b>c)
+            mayor = b;
+        else
+            mayor = c;
+    cout << "El mayor es: " << mayor<< endl;
+    
+}
+
+bool Primo ()
+
+{
+    int n, i;
+    bool k = true;
+    cout << "Digite un numero: ";
+    cin >> n;
+    for(i=2;i<n;i++)
+        if(n%i==0)
+            k = false;
+    
+    return k;
+            
+    
+}
