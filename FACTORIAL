@@ -1,0 +1,8 @@
+int FACTORIAL (int n)
+{
+    int i , f;
+    
+    for(i=1, f=1; i<=n; f*=i,i++);
+
+    return f;
+}
