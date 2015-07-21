@@ -1,0 +1,66 @@
+# include "stdafx.h"
+# include <iostream>
+# include "conio.h"
+# include <string>
+# include <math.h>
+
+using namespace std;
+
+# define row 10
+# define col 10
+
+struct tdiagonal
+{
+    
+    int matint[row][col];
+};
+
+
+void Cargar_M_M(tdiagonal matext[row][col],int n);
+float PromDiag_M_M (tdiagonal matext[row][col], int n);
+
+int main ()
+{
+    int n;
+    float prom;
+    tdiagonal matext[row][col];
+    
+    do{
+        cout << "Ingrese el numero de elementos: ";
+        cin >> n;
+    }while((n>row)||(n<0));
+    
+    Cargar_M_M(matext, n);
+    
+    prom = PromDiag_M_M(matext, n);
+    cout << "El promedio de la diagonal de diagonales es: " << prom << endl;
+    
+    return 0;
+}
+
+void Cargar_M_M(tdiagonal matext[row][col],int n)
+{
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+            for(int k=0;k<n;k++)
+                for(int l=0;l<n;l++)
+                {
+                    cout << "M["<<i<<"]["<<j<<"]["<<k<<"]["<<l<<"]=";
+                    cin >> matext[i][j].matint[k][l];
+                }
+}
+
+
+float PromDiag_M_M (tdiagonal matext[row][col], int n)
+{
+    float prom, s=0;
+    
+    
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+            s=s+matext[i][i].matint[j][j];
+    
+    prom = s/(n*n);
+    return prom;
+}
+
