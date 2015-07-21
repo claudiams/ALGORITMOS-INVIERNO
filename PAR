@@ -1,0 +1,10 @@
+bool PAR (int n)
+{
+    bool k = true;
+    
+    if (n%2!=0)
+        k = false;
+    
+        return k;
+    
+}
