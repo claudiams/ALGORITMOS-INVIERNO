@@ -1,0 +1,103 @@
+# include "stdafx.h"
+# include <iostream>
+
+using namespace std;
+
+# define max 100
+
+
+struct VdeV
+{
+    
+    int vint[max];
+};
+
+void Invertir_v(int a[],int n);
+
+void Invertir_vstr(VdeV a[],int n);
+
+void Imprimir(VdeV vext[], int n);
+
+void Cargar (VdeV vext[], int n);
+
+void InvertirVdeV (VdeV vext[], int n);
+
+int main ()
+{
+    int n;
+    VdeV vext[max];
+    
+    do{
+        
+    cout << "Ingrese un numero: ";
+    cin >> n;
+        
+    }while((n<=0)||(n>=max));
+    
+    Cargar(vext, n);
+    Imprimir(vext, n);
+    InvertirVdeV(vext, n);
+    cout << "\n";
+    Imprimir(vext, n);
+    
+    
+    return 0;
+}
+
+void Invertir_v(int a[],int n)
+{
+    for(int i=0;i<n/2;i++)
+    {
+        swap(a[i],a[n-1-i]);
+    }
+    
+
+}
+
+void Invertir_vstr(VdeV a[],int n)
+{
+    for(int i=0;i<n/2;i++)
+    {
+        swap(a[i],a[n-1-i]);
+    }
+    
+    
+}
+
+
+
+void Cargar (VdeV vext[], int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            vext[i].vint[j] = rand() %10;
+        }
+    }
+    
+}
+
+
+void InvertirVdeV (VdeV vext[], int n)
+{
+    
+    Invertir_v(vext->vint, n);
+    Invertir_vstr(vext, n);
+    
+}
+
+void Imprimir(VdeV vext[], int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+           cout <<  vext[i].vint[j] << " ";
+        }
+        cout << "|";
+    }
+    
+}
+
+
