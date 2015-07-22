@@ -1,0 +1,51 @@
+# include "stdafx.h"
+# include <iostream>
+# include <string>
+
+
+using namespace std;
+
+int Precio(string cadena);
+
+int main()
+{
+    
+    string cadena="año";
+    
+    cout << Precio(cadena)<< endl;
+    
+    
+    
+    
+}
+
+
+
+
+int Precio(string cadena)
+{
+    
+    long tam;
+    int s=0, valor ;
+    char a;
+    tam = cadena.length();
+    for(int i=0;i<tam;i++)
+    {
+        a=cadena[i];
+        if((a>='A')&&(a<='z'))
+            valor=10;
+        else
+            if((a>='0')&&(a<='9'))
+               valor=20;
+            else
+                if(a==' ')
+                    valor=0;
+                else
+                    valor=15;
+        s=s+valor;
+    }
+    
+    return s;
+    
+    
+}
