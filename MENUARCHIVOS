@@ -1,0 +1,288 @@
+# include "stdafx.h"
+# include "stdio.h"
+# include "conio.h"
+# include <iostream>
+# include <string>
+
+using namespace std;
+
+struct tproduct
+{
+    int cod;
+    string detalle;
+    int cant;
+    float precio;
+};
+
+tproduct prod;
+
+FILE *alias;
+
+int MENU();
+void ADICIONAR();
+void BUSCAR();
+void LISTAR();
+void MODIFICAR();
+void ELIMINAR();
+void BajaLogica ();
+void BajaFisica();
+
+int main ()
+{
+    int opc;
+    
+    do {
+        opc = MENU();
+        switch (opc) {
+            case 1:
+                ADICIONAR();
+                break;
+            case 2:
+                BUSCAR();
+                break;
+            case 3:
+                LISTAR();
+                break;
+            case 4:
+                MODIFICAR();
+                break;
+            case 5:
+                ELIMINAR();
+                break;
+            case 6:
+                break;
+            default:
+                cout << "\t\tOPCION INVALIDA\n";
+                break;
+        }
+        getch();
+        system("cls");
+    } while (opc!=6);
+    
+    
+    
+    cout << "\n";
+    return 0;
+}
+
+int MENU()
+{
+    
+    int opc;
+    cout << "\n\t\t*******MENU********\n";
+    cout << "1. ADICIONAR\n";
+    cout << "2. BUSCAR\n";
+    cout << "3. LISTAR\n";
+    cout << "4. MODIFICAR\n";
+    cout << "5. ELIMINAR\n";
+    cout << "6. SALIR\n";
+    cout << "Ingrese la opcion: ";
+    cin >> opc;
+    return opc;
+    
+}
+
+void ADICIONAR()
+{
+    int cod;
+    cout << "\r**********ALTAS DE REGISTROS DE PRODUCTOS**********\n";
+    alias = fopen("productos.sec", "rb+");
+    if(alias==NULL)
+        alias = fopen("productos.sec", "wb");
+    else
+    {
+        cout << "Ingrese el codigo: ";
+        cin >> cod;
+        fread(&prod,sizeof(prod),1,alias);
+        while(!feof(alias))
+        {
+            if(cod==prod.cod)
+            {
+                cout << "CODIGO DUPLICADO"<< endl;
+                fclose(alias);
+                return;
+            }
+            fread(&prod,sizeof(prod),1,alias);
+        }
+    }
+    cout<<"Ingrese el detalle: ";
+    cin.ignore();
+    getline(cin,prod.detalle);
+    cout <<"Ingrese la cantidad: ";
+    cin >> prod.cant;
+    cout <<"Ingrese el precio: ";
+    cin >> prod.precio;
+    prod.cod = cod;
+    fwrite(&prod, sizeof(prod),1,alias);
+    cout <<"PRODUCTO REGISTRADO CORRECTAMENTE" << endl;
+    fclose(alias);
+    return;
+
+}
+
+void BUSCAR()
+{
+    int cod;
+    cout << "\r**********CONSULTA SECUENCIAL**********\n";
+    alias = fopen("productos.sec" , "rb" );
+    if(alias == NULL)
+        cout << "ARCHIVO NO ENCONTRADO" << endl;
+       
+    else
+    {
+        cout << "Ingrese el codigo: ";
+        cin >> cod;
+        fread(&prod, sizeof(prod),1,alias);
+        while(!feof(alias))
+        {
+            if(cod==prod.cod)
+            {
+                cout << "PRODUCTO ENCONTRADO" << endl;
+                cout << "Codigo: " << prod.cod << "\nDetalle: " << prod.detalle << "\nCantidad: " << prod.cant << "\nPrecio: " << prod.precio << endl;
+                fclose(alias);
+                return;
+            }
+            fread(&prod, sizeof(prod), 1, alias);
+        }
+        cout << "PRODUCTO NO ENCONTRADO" << endl;
+        fclose(alias);
+    }
+     return;
+}
+
+void LISTAR()
+{
+    cout << "\r**********LISTADO SECUENCIAL**********\n";
+    alias = fopen ("productos.sec" , "rb");
+    if(alias == NULL)
+        cout << "ARCHIVO NO ENCONTRADO" << endl;
+    else
+    {
+        cout << "COD\tDETALLE\tCANT\tPRECIO\n";
+        fread(&prod, sizeof(prod), 1, alias);
+        while(!feof(alias))
+        {
+            cout << prod.cod << "\t" << prod.detalle << "\t" << prod.cant << "\t" << prod.precio << endl;
+            fread(&prod, sizeof(prod), 1, alias);
+        }
+        fclose(alias);
+    }
+    return;
+}
+
+void MODIFICAR()
+
+{
+    int cod;
+    cout << "\r**********MODIFICACION SECUENCIAL**********\n";
+    alias= fopen("productos.sec", "rb+");
+    if(alias == NULL)
+        cout << "ARCHIVO NO ENCONTRADO" <<endl;
+    else
+    {
+        cout << "Ingrese el codigo: ";
+        cin >> cod;
+        fread(&prod, sizeof(prod), 1, alias);
+        while(!feof(alias))
+        {
+            if(cod == prod.cod)
+            {
+                cout << "PRODUCTO ENCONTRADO" << endl;
+                cout << "Codigo: " << prod.cod << "\nDetalle: " << prod.detalle << "\nCantidad: " << prod.cant << "\nPrecio: " << prod.precio << endl;
+                cout << "\rIngrese Nueva Informacion...\n";
+                cout << "Detalle: ";
+                cin.ignore();
+                getline(cin, prod.detalle);
+                cout << "Cantidad: ";
+                cin >> prod.cant;
+                cout << "Precio: ";
+                cin >> prod.precio;
+                fseek(alias, ftell(alias)-sizeof(prod), SEEK_SET);
+                fwrite(&prod, sizeof(prod), 1, alias);
+                cout << "PRODUCTO MODIFICADO CORRECTAMENTE" <<endl;
+                fclose(alias);
+                return;
+            }
+            fread(&prod, sizeof(prod), 1, alias);
+        }
+        cout << "PRODUCTO NO ENCONTRADO" <<endl;
+        fclose(alias);
+    }
+    return;
+}
+
+void ELIMINAR()
+{
+    alias = fopen("productos.sec", "rb+");
+    if(alias == NULL)
+        cout << "ARCHIVO NO ENCONTRADO" << endl;
+    else
+    {
+        BajaLogica();
+        BajaFisica();
+    }
+    
+    
+}
+
+void BajaLogica ()
+{
+    int cod;
+    char resp;
+    cout << "\r**********BAJA LOGICA SECUENCIAL***********\n";
+    cout << "Ingrese el codigo: ";
+    cin >> cod;
+    fread(&prod, sizeof(prod), 1, alias);
+    while (!feof(alias))
+    {
+        if(cod==prod.cod)
+        {
+            
+            cout << "PRODUCTO ENCONTRADO" << endl;
+            cout << "Codigo: " << prod.cod << "\nDetalle: " << prod.detalle << "\nCantidad: " << prod.cant << "\nPrecio: " << prod.precio << endl;
+            do
+            {
+                cout << "Seguro que desea eliminarlo? (S/N): ";
+                cin >> resp;
+                resp = toupper(resp);
+                
+            } while ((resp!='S')&&(resp!='N'));
+            if(resp == 'S')
+            {
+                prod.cod = 0;
+                prod.detalle = "";
+                prod.cant = 0;
+                prod. precio = 0.0;
+                fseek(alias, ftell(alias) - sizeof(prod), SEEK_SET);
+                fwrite(&prod, sizeof(prod), 1, alias);
+                cout << "REGISTRO ELIMINADO" << endl;
+            }
+            fclose(alias);
+            return;
+        }
+        fread(&prod, sizeof(prod), 1, alias);
+    }
+    cout << "PRODUCTO NO ENCONTRADO" << endl;
+    fclose(alias);
+    return;
+}
+
+void BajaFisica()
+{
+    FILE *temp;
+    alias = fopen("productos.sec", "rb+");
+    temp = fopen("temporal.sec", "wb");
+    fread(&prod, sizeof(prod), 1, alias);
+    while (!feof(alias))
+    {
+        if(prod.cod!=0)
+            fwrite(&prod, sizeof(prod), 1, temp);
+        fread(&prod, sizeof(prod), 1, alias);
+    }
+    cout << "ARCHIVO COMPACTADO" << endl;
+    fclose(alias);
+    fclose(temp);
+    remove("productos.sec");
+    rename("temporal.sec", "productos.sec");
+    return;
+}
