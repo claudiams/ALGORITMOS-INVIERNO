@@ -1,0 +1,356 @@
+Practico 3.-
+
+
+1.-
+
+void MatTransp(int M[row][col], int n,int m)
+{
+    for(int i=0;i<n;i++)
+        for(int j=i;j<n;j++)
+            swap (M[i][j],M[j][i]);
+}
+
+
+
+
+2;-
+MATRIZ INVERSA
+
+# include "stdio.h"
+# include <iostream>
+# include <math.h>
+
+# define row 10
+# define col 10
+
+using namespace std;
+
+void MatTransp(float M[row][col], int n,int m);
+void Print_M(float M[row][col], int n, int m);
+float DetDosxDos_M(float M[row][col]);
+void ElimRowCol(float M[row][col], float C[row][col], int n, int k, int l);
+void MatrizAdj (float M[row][col],float F[row][col], int n);
+float Determ (float M[row][col], int n);
+void MultMatrEnt (float M[row][col], int n, int m, float e);
+
+
+int main ()
+{
+    float det, A[row][col],M[row][col]={{1,-1,0},{0,1,0},{2,0,1}};
+    
+    MatrizAdj(M, A, 3);
+    MatTransp(A, 3, 3);
+    det = Determ(M, 3);
+    MultMatrEnt(A, 3, 3, (1/det));
+    Print_M(A, 3, 3);
+    
+    return 0;
+}
+
+
+void MatTransp(float M[row][col], int n,int m)
+{
+    for(int i=0;i<n;i++)
+        for(int j=i;j<n;j++)
+            swap (M[i][j],M[j][i]);
+}
+
+void Print_M(float M[row][col], int n, int m)
+{
+    
+   for(int i=0;i<n;i++)
+   {
+       for(int j=0;j<m;j++)
+           cout << M[i][j]<<" ";
+       cout << endl;
+    }
+    
+}
+
+float DetDosxDos_M(float M[row][col])
+{
+    int i=0,j=1;
+    float det;
+    det = (float)(M[i][i]*M[j][j])-(M[i][j]*M[j][i]);
+    return det;
+    
+}
+
+
+void ElimRowCol(float M[row][col], float C[row][col], int n, int k, int l)
+{
+    for(int i=0,p=0;i<n;p++,i++)
+    {
+        if(i==k)
+        {
+            i++;
+        }
+        for(int j=0,q=0;j<n;q++,j++)
+        {
+            if(j==l)
+            {
+                j++;
+            }
+            C[p][q]=M[i][j];
+        }
+
+    }
+    
+}
+
+
+void MatrizAdj (float M[row][col],float F[row][col], int n)
+{
+    float c[row][col];
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            
+            ElimRowCol(M, c, n, i, j);
+            F[i][j]=DetDosxDos_M(c)*pow(-1, i+j);
+            
+        }
+    }
+}
+
+ float Determ (float M[row][col], int n)
+{
+    int i=1,j;
+    float det=0, F[row][col];
+    MatrizAdj(M, F,n);
+    for(j=0;j<n;j++)
+        det = det + M[i][j]*F[i][j];
+    return det;
+    
+}
+
+
+void MultMatrEnt (float M[row][col], int n, int m, float e)
+{
+    
+    for (int i=0;i<n;i++)
+        for (int j=0;j<m;j++)
+            M[i][j]=M[i][j]*e;
+    
+}
+
+3.-
+void Suma_M(int A[row][col], int B[row][col],int C[row][col], int n, int m)
+{
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+            C[i][j]=A[i][j]+B[i][j];
+}
+
+4.-
+
+void Multp_M(int A[row][col], int B[row][col], int C[row][col], int n, int m)
+{
+    for(int i=0;i<n;i++)
+        for(int j=0; j<n; j++)
+        {
+            for(int r=0, s=0;r<n;r++)
+                s=s+A[i][r]*B[r][j];
+            C[i][j]=s;
+        }
+}
+
+8.-
+
+void MultTres_M(int a[row][col], int n ,int m)
+{
+    int c=1;
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++)
+        {
+            a[i][j]=3*c;
+            c++;
+        }
+    
+}
+
+9.-
+
+
+int InvertN(int n)
+{
+    int r,s=0;
+    while(n>0)
+    {
+        r=n%10;
+        s=s*10+r;
+        n=n/10;
+    }
+    return s;
+}
+
+
+void CuadInv_M(int a[row][col],int n, int m)
+{
+    int c=1;
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+        {
+            a[i][j]=InvertN(c*c);
+            c++;
+        }
+}
+
+
+10.-
+
+void SumaDig_M(int a[row][col], int n,int m)
+{
+    int s=0;
+    a[0][0]=1;
+    for(int i=0;i<n;i++)
+    {    for(int j=0;j<m;j++)
+        {
+            for(int k=0;k<n;k++)
+                for(int l=0;l<m;l++)
+                    s=s+SumaDig(a[k][l]);
+            
+            a[i][j]=s;
+            s=0;
+        }
+    }
+}
+
+int SumaDig(int n)
+
+{
+    int r,s=0;
+    while(n>0)
+    {
+        
+        r=n%10;
+        s=s+r;
+        n=n/10;
+    }
+    return s;
+}
+
+
+11.-
+
+# include "stdio.h"
+# include <iostream>
+# include <math.h>
+# include <string>
+# define max 100
+# define row 10
+# define col 10
+
+
+using namespace std;
+
+void SumaDig_M(int a[row][col], int n,int m);
+int SumaDig(int n);
+void Print_M(int M[row][col], int n, int m);
+
+
+
+int main ()
+{
+    
+    int a[row][col];
+    
+    SumaDig_M(a, 4, 4);
+    Print_M(a, 4, 4);
+    
+    
+        return 0;
+}
+
+
+void SumaDig_M(int a[row][col], int n,int m)
+{
+    int s=0;
+    a[0][0]=1;
+    for(int i=0;i<n;i++)
+    {    for(int j=0;j<m;j++)
+    {
+        for(int k=0;k<n;k++)
+            for(int l=0;l<m;l++)
+                s=s+SumaDig(a[k][l]);
+        
+        a[i][j]=SumaDig(s);
+        s=0;
+    }
+    }
+}
+
+int SumaDig(int n)
+
+{
+    int r,s=0;
+    while(n>0)
+    {
+        
+        r=n%10;
+        s=s+r;
+        n=n/10;
+    }
+    return s;
+}
+
+void Print_M(int M[row][col], int n, int m)
+{
+    
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+            cout << M[i][j]<<" ";
+        cout << endl;
+    }
+    
+}
+
+
+struct telementov
+{
+    string vecInt[max];
+};
+
+
+void Imprimir_V_V (telementov vecExt[], int n);
+void Cargar_V_V(telementov vecExt[], int n);
+
+
+int main ()
+{
+    telementov vecExt[max];
+    int n;
+    do{
+    
+        cout << "Ingrese un numero";
+        cin >> n;
+    }while((n<=0)||(n>=100));
+    
+    Cargar_V_V(vecExt, n);
+    Imprimir_V_V(vecExt, n);
+    
+    
+    return 0;
+}
+
+
+void Cargar_V_V(telementov vecExt[], int n)
+{
+    
+    for(int i=0;i<n;i++)
+        cin >> vecExt[i];
+        
+    
+}
+
+
+void Imprimir_V_V (telementov vecExt[], int n)
+{
+    
+    for(int i=0;i<n;i++)
+        for( int j=0; j<n;j++)
+           cout << vecExt[i].vecInt[j];
+            
+}
