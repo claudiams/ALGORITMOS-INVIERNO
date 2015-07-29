@@ -20,7 +20,8 @@ void ALTADIRECTA()
     else
     {
         cout << "Ingrese el detalle: ";
-        cin >> prod.detalle;
+        cin.ignore();
+        getline(cin, prod.detalle);
         cout << "ingrese la cantidad";
         cin >> prod.cant;
         cout << "Ingrese el precio: ";
