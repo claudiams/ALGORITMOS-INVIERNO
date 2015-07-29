@@ -1,0 +1,41 @@
+void MODIFICAR()
+
+{
+    int cod;
+    cout << "\r**********MODIFICACION SECUENCIAL**********\n";
+    alias= fopen("productos.sec", "rb+");
+    if(alias == NULL)
+        cout << "ARCHIVO NO ENCONTRADO" <<endl;
+    else
+    {
+        cout << "Ingrese el codigo: ";
+        cin >> cod;
+        fread(&prod, sizeof(prod), 1, alias);
+        while(!feof(alias))
+        {
+            if(cod == prod.cod)
+            {
+                cout << "PRODUCTO ENCONTRADO" << endl;
+                cout << "Codigo: " << prod.cod << "\nDetalle: " << prod.detalle << "\nCantidad: " << prod.cant << "\nPrecio: " << prod.precio << endl;
+                cout << "\rIngrese Nueva Informacion...\n";
+                cout << "Detalle: ";
+                cin.ignore();
+                getline(cin, prod.detalle);
+                cout << "Cantidad: ";
+                cin >> prod.cant;
+                cout << "Precio: ";
+                cin >> prod.precio;
+                fseek(alias, ftell(alias)-sizeof(prod), SEEK_SET);
+                fwrite(&prod, sizeof(prod), 1, alias);
+                cout << "PRODUCTO MODIFICADO CORRECTAMENTE" <<endl;
+                fclose(alias);
+                return;
+            }
+            fread(&prod, sizeof(prod), 1, alias);
+        }
+        cout << "PRODUCTO NO ENCONTRADO" <<endl;
+        fclose(alias);
+    }
+    return;
+}
+
