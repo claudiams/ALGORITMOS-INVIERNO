@@ -1,0 +1,37 @@
+void ADICIONAR()
+{
+    int cod;
+    cout << "\r**********ALTAS DE REGISTROS DE PRODUCTOS**********\n";
+    alias = fopen("productos.sec", "rb+");
+    if(alias==NULL)
+        alias = fopen("productos.sec", "wb");
+    else
+    {
+        cout << "Ingrese el codigo: ";
+        cin >> cod;
+        fread(&prod,sizeof(prod),1,alias);
+        while(!feof(alias))
+        {
+            if(cod==prod.cod)
+            {
+                cout << "CODIGO DUPLICADO"<< endl;
+                fclose(alias);
+                return;
+            }
+            fread(&prod,sizeof(prod),1,alias);
+        }
+    }
+    cout<<"Ingrese el detalle: ";
+    cin.ignore();
+    getline(cin,prod.detalle);
+    cout <<"Ingrese la cantidad: ";
+    cin >> prod.cant;
+    cout <<"Ingrese el precio: ";
+    cin >> prod.precio;
+    prod.cod = cod;
+    fwrite(&prod, sizeof(prod),1,alias);
+    cout <<"PRODUCTO REGISTRADO CORRECTAMENTE" << endl;
+    fclose(alias);
+    return;
+
+}
