@@ -1,0 +1,27 @@
+void CONSULTADIRECTA()
+{
+    int cod;
+    long int dirfis;
+    FILE *alias;
+    tproduct prod;
+    alias = fopen("productos.dat", "rb");
+    if(alias == NULL)
+        cout << "Archivo no encontrado";
+    else
+    {
+        cout << "Ingrese el codigo: ";
+        cin >> cod;
+        dirfis = cod*sizeof(prod);
+        fseek(alias, dirfis, SEEK_SET);
+        fread(&prod, sizeof(prod), 1, alias);
+        if(prod.cod == cod)
+            cout << "\t\tProducto Encontrado\n"<< "Codigo: " << prod.cod << "\nDetalle: " << prod.detalle << "\nCantidad: " << prod.cant << "\nPrecio: " << prod.precio << endl;
+        
+        else
+            cout << "\t\tProducto no encontrado\n";
+    }
+    
+    fclose(alias);
+    return;
+  
+}
