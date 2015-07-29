@@ -1,0 +1,49 @@
+void ELIMINARDIRECTA_LOG ()
+{
+    FILE *alias;
+    int cod;
+    char resp;
+    long int dirfis;
+    tproduct prod;
+    alias = fopen("productos.dat", "rb+");
+    if(alias == NULL)
+        cout << "Archivo no Encontrado\n";
+    else
+    {
+        cout << "Ingrese el Codigo : ";
+        cin >> cod;
+        dirfis = cod*sizeof(prod);
+        fseek(alias, dirfis, SEEK_SET);
+        fread(&prod, sizeof(prod), 1, alias);
+        if(cod == prod.cod)
+        {
+            cout << "\t\tInformacion Actual\n" << "Codigo: " << prod.cod << "\nDetalle: " << prod.detalle << "\nCantidad: " << prod.cant << "\nPrecio: " << prod.precio << endl;
+
+            do
+            {
+                cout << "Seguro que desea eliminarlo? (S/N): ";
+                cin >> resp;
+                resp = toupper(resp);
+            } while ((resp!='S')&&(resp!='N'));
+            if(resp == 'S')
+            {
+                prod.cod = 0;
+                prod.detalle = "";
+                prod.cant = 0;
+                prod.precio = 0.0;
+                fseek(alias, dirfis, SEEK_SET);
+                fwrite(&prod, sizeof(prod), 1, alias);
+                cout << "Registro Eliminado Logicamente"<<endl;
+            
+            }
+            else
+                cout << "Registro no eliminado" << endl;
+        }
+        else
+            cout << "Producto no Encontrado" << endl;
+    }
+    
+    fclose(alias);
+    return;
+    
+}
