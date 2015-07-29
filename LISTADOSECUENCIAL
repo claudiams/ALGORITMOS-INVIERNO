@@ -1,0 +1,19 @@
+void LISTAR()
+{
+    cout << "\r**********LISTADO SECUENCIAL**********\n";
+    alias = fopen ("productos.sec" , "rb");
+    if(alias == NULL)
+        cout << "ARCHIVO NO ENCONTRADO" << endl;
+    else
+    {
+        cout << "COD\tDETALLE\tCANT\tPRECIO\n";
+        fread(&prod, sizeof(prod), 1, alias);
+        while(!feof(alias))
+        {
+            cout << prod.cod << "\t" << prod.detalle << "\t" << prod.cant << "\t" << prod.precio << endl;
+            fread(&prod, sizeof(prod), 1, alias);
+        }
+        fclose(alias);
+    }
+    return;
+}
