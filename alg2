@@ -1,0 +1,211 @@
+// claudia.cpp : Defines the entry point for the console application.
+//
+#include "stdafx.h"
+#include <iostream>
+#define NMAX 20
+int main ()
+{
+int opc, i, k , j, n, A[NMAX][NMAX], B[NMAX][NMAX], C[NMAX][NMAX], aux, k, ent, l;
+float A[NMAX][NMAX], B[NMAX][NMAX], det;
+cout << "OPERACIONES CON MATRICES" << endl;
+cout << "1. SUMAR" << endl;
+cout << "2. RESTAR" << endl;
+cout << "3. MULTIPLICAR" << endl;
+cout << "4. MULTIPLICAR ENTEROS" << endl;
+cout << "5. ORDENAR" << endl;
+cout << "6. TRANSPUESTA" << endl;
+cout << "7. INVERSA" << endl;
+cin >> opc;
+switch (opc)
+{
+case 1 :
+cout << "Ingrese el orden de las matrices: " << endl;
+cin >> n ;
+cout << "Ingrese Matriz A:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> A[i][j];
+}
+cout << "Ingrese Matriz B:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> B[i][j];
+}
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+C[i][j] = A[i][j] + B[i][j];
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+cout << "La Matriz resultante es: " << C[i][j] << "\t";
+}
+cout << endl;
+}
+case 2 :
+cout << "Ingrese el orden de las matrices: " << endl;
+cin >> n ;
+cout << "Ingrese Matriz A:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> A[i][j];
+}
+cout << "Ingrese Matriz B:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> B[i][j];
+}
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+C[i][j] = A[i][j] - B[i][j];
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+cout << "La Matriz resultante es: " << C[i][j] << "\t";
+}
+cout << endl;
+}
+case 3 :
+cout << "Ingrese el orden de las matrices: " << endl;
+cin >> n ;
+cout << "Ingrese Matriz A:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> A[i][j];
+}
+cout << "Ingrese Matriz B:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> B[i][j];
+}
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+aux = 0;
+for (k =0 ; k < n ; k++)
+{
+aux = aux + ( A[i][j] * B[i][j] );
+}
+C[i][j] = aux;
+}
+}
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+cout << "La Matriz resultante es: " << C[i][j] << "\t";
+}
+cout << endl;
+}
+case 4 :
+cout << "Ingrese el orden de la matriz: " << endl;
+cin >> n ;
+cout << "Ingrese el entero: " ;
+cin >> ent;
+cout << "Ingrese Matriz A:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> A[i][j];
+}
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+C[i][j] = A [i][j] * ent;
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+cout << "La Matriz resultante es: " << C[i][j] << "\t";
+}
+cout << endl;
+}
+case 5 :
+cout << "Ingrese el orden de las matrices: " << endl;
+cin >> n ;
+cout << "Ingrese Matriz A:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> A[i][j];
+}
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+for ( k=0 ; k< n ; k++)
+for ( l=0; l< n; l++)
+if(A[i][j]>A[k][l])
+{
+aux = A[i][j];
+A[k][l] = A[i][j];
+A[i][j] = aux;
+}
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+cout << "La Matriz resultante es: " << A[i][j] << "\t";
+}
+cout << endl;
+}
+case 6 :
+cout << "Ingrese el orden de las matrices: " << endl;
+cin >> n ;
+cout << "Ingrese Matriz A:" << endl;
+for (i=0; i<n; i++)
+for (j=0; j<n ; j++)
+{
+cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+cin >> A[i][j];
+}
+for (i=0; i<n; i++)
+for (j=i+1; j<n ; j++)
+{
+if(j>i)
+{
+aux = A[i][j];
+A[i][j] = A[j][i];
+A[j][i] = aux;
+}
+}
+for (i=0; i<n; i++)
+{
+for (j=0; j<n ; j++)
+{
+cout << "La Matriz resultante es: " << A[i][j] << "\t";
+}
+cout << endl;
+}
+//case 7 :
+//	cout << "Ingrese el orden de las matrices: " << endl;
+//	cin >> n ;
+//	cout << "Ingrese Matriz A:" << endl;
+//	for (i=0; i<n; i++)
+//	for (j=0; j<n ; j++)
+//	{
+//	cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+//	cin >> A[i][j];
+//	}\*
+// adjunta
+// elim colum fila
+// determ mat aux
+// transpuesta
+// determ
+// multlp por determ
+}
+return 0;
+}
