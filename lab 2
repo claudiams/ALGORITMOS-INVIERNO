@@ -1,0 +1,545 @@
+// claudia.cpp.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#define NMAX 20
+
+
+int main ()
+{
+	int opc, i=0, k=0 , j=0, n, A[NMAX][NMAX], B[NMAX][NMAX], C[NMAX][NMAX], aux, ent, l=0, p=0,q=0;
+	float D[NMAX][NMAX], E[NMAX][NMAX], F[NMAX][NMAX], det=0, DET, ;
+	 
+	do
+	{
+	cout << "OPERACIONES CON MATRICES" << endl;
+	cout << "1. SUMAR" << endl;
+	cout << "2. RESTAR" << endl;
+	cout << "3. MULTIPLICAR" << endl;
+	cout << "4. MULTIPLICAR ENTEROS" << endl;
+	cout << "5. ORDENAR" << endl;
+	cout << "6. TRANSPUESTA" << endl;
+	cout << "7. INVERSA" << endl;
+cout << “8. SALIR” << endl;
+
+	cin >> opc;
+
+		switch (opc)
+	{
+		case 1 :
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+			cout << "Ingrese Matriz B:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> B[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					C[i][j] = A[i][j] + B[i][j];
+					j++;
+				}
+				i++:
+			{
+
+			cout<< “La Matriz Resultante es: ” << endl;				
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+		case 2 : 
+
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+			cout << "Ingrese Matriz B:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> B[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+			
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					C[i][j] = A[i][j] - B[i][j];
+					j++;
+				}
+				i++:
+			{
+
+			cout<< “La Matriz Resultante es: ” << endl;				
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+
+
+			
+		case 3 : 
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+			cout << "Ingrese Matriz B:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> B[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+
+
+			while (i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					aux = 0;
+					while (k =0 ; k < n ; k++)
+					{
+						k=0;
+						aux  = aux + ( A[i][j] * B[i][j] );		
+						k++:
+
+					}
+					 C[i][j] =  aux;
+					j++;				}
+			i++:
+
+			}
+				
+			cout<< “La Matriz Resultante es: ” << endl;				
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+
+		case 4 : 
+
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+		
+				}
+				i++;
+			}
+			cout << "Ingrese el numero entero de las matrices: " << endl;
+			cin >> ent ;
+
+
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					C[i][j] = A [i][j] * ent;
+					j++;
+				}
+				i++:
+			{
+
+				
+			cout<< “La Matriz Resultante es: ” << endl;							
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+
+		case 5 : 
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+				}
+				i++;
+			}
+					
+			while ( i<n;)
+			{
+				i=0;
+				while (j<n )
+				{
+					j=0;
+					while ( k=i ; k< n ; k++)
+					{
+						k=0;
+						while ( l=j; l< n; l++)
+						{
+							l=0;
+							if(A[i][j]>A[k][l])
+							{
+								aux = A[i][j];
+								A[k][l] = A[i][j];
+								A[i][j] = aux;
+							}
+							l++;
+						}
+						k++;
+					}
+					j++;
+				}
+				i++;
+			}
+				cout<< “La Matriz Resultante es: ” << endl;				
+				while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+
+		case 6 : 
+
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+				}
+				i++;
+			}
+					
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while ( j<n )
+				{
+					j=i+1;
+					if(j>i)
+					{
+						aux = A[i][j];
+						A[i][j] = A[j][i];
+						A[j][i] = aux;
+					}
+					j++;
+				}
+				i++;
+			}
+					
+				cout<< “La Matriz Resultante es: ” << endl;		
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+
+				
+		case 7 : 
+
+			cout << "Ingrese el orden de las matrices: " << endl;
+			cin >> n ;
+			cout << "Ingrese Matriz A:" << endl;
+			while (i<n)
+			{
+				i=0;
+
+			
+				while (j<n)
+				{
+					j=0;
+					 cout << "Introduzca elemento " << i << "," << j << ": " << endl;
+					 cin >> A[i][j];
+					j++;
+				}
+				i++;
+			}
+
+			while (i<n)
+			{
+				while(j<n)
+				{
+					while(k<n)
+					{
+						while(l<n)
+						{
+							i=1;
+         						   	j=1;
+							k=0;
+							l=0
+          		 					D[k][l]=A[i][j];
+							
+							l++;
+							
+						}
+						k++;
+					}
+					j++;
+}
+i++;
+			}
+
+
+
+
+while(i<n)
+ {
+	i=0;
+	while(j<n);
+	{	
+		j=0;
+   	while(k<n)
+   	{
+			k=0;
+			p=0;
+        		if(k==p)
+        		{
+            		k++;
+        		}
+        		while(l<n)
+        		{
+				l=0;
+				q=0;
+            		if(q==l)
+            		{
+                			l++;
+            		}
+            		D[p][q]=A[k][l];
+				l++;
+				q++;
+        		}
+			k++;
+			p++;
+    	}
+    
+   		det = (D[0][0]*D[1][1])-(D[0][1]*D[1][0]);
+		E[i][j] = det * pow(-1, i+j);
+              	j++;
+}
+i++;
+		}
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while ( j<n )
+				{
+					j=i+1;
+					if(j>i)
+					{
+						aux = E[i][j];
+						E[i][j] = E[j][i];
+						E[j][i] = aux;
+					}
+					j++;
+				}
+				i++;
+			}
+ 	 	 	while(j<n;)
+			{
+				j=0;
+				DET = DET + A[1][j]*E[1][j];
+  				 j++;
+			}
+
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					F[i][j] = E [i][j] * DET;
+					j++;
+				}
+				i++:
+			{
+
+			cout<< “La Matriz Resultante es: ” << endl;		
+			while (i=0; i<n; i++)
+			{
+				i=0;
+				while (j=0; j<n ; j++)
+				{
+					j=0;
+					cout  << C[i][j] << “\t";
+					j++;
+
+				}
+				i++;
+				cout << endl;
+
+			}
+
+case 8: 
+break;
+
+default:
+                cout << "Salir" << endl;
+                break;
+		}
+}while(opc != 8 );
+
+	return 0;
+}
