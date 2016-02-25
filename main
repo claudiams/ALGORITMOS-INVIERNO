@@ -1,0 +1,119 @@
+// 25_02.cpp : Defines the entry point for the console application.
+//
+
+
+
+#include "stdafx.h"
+#include "conio.h"
+#include "stdlib.h"
+#include <iostream>
+#include "funciones_matrices"
+
+#define NMAX 30
+
+
+using namespace std;
+
+void MENU ();
+
+int main ()
+{
+    
+    int opc;
+	float ent, n1=0,mat1[NMAX][NMAX],mat2[NMAX][NMAX],c[NMAX][NMAX], det;
+    do
+    {
+        MENU();
+        cout << "Digite la opcion: ";
+        cin >> opc;
+        switch (opc)
+        {
+            case 1 :
+
+				cargar(mat1,n);
+                sumarMatrices(mat1,mat2,n1,c);
+				mostrar(c, n1);
+                break;
+
+            case 2 :
+
+				cargar(mat1,n);
+                restarMatrices(mat1,mat2,n1,c);
+				mostrar(c, n1);
+               
+                break;
+
+            case 3 :
+
+				cargar(mat1,n);
+                multiplicarMatrices (mat1,mat2,n1,c);
+				mostrar(c, n1);
+               
+
+            break;
+
+			case 4 :
+
+				cout << "Ingrese el entero: " ;
+				cin >> ent; 
+				cargar(mat1,n);
+				multiplicarMatriz_Entero (mat1,n1,c, ent);
+               
+
+            break;
+
+
+			case 5 :
+
+				cargar(mat1,n);
+				 OrdAsc_Matriz (mat1, n)
+				mostrar(mat1, n1);
+
+
+
+
+
+
+			case 7 :
+
+						
+				cargar(mat1,n);
+				MatrizAdj(mat1, mat2, n);
+				MatTransp(mat2, n);
+				det = Determ(mat1, 3);
+				multiplicarMatriz_Entero(mat2,n1,c, (1/det));
+				mostrar(c, n1);
+               
+
+            break;
+
+                
+            default:
+                cout << "Salir" << endl;
+                break;
+        }
+        getchar();
+      
+        
+    }while(opc!=8);
+    
+    
+    return 0;
+}
+
+
+void MENU ()
+{
+    cout << "MENU\n";
+    cout << "----\n";
+	cout << "1. SUMAR" << endl;
+	cout << "2. RESTAR" << endl;
+	cout << "3. MULTIPLICAR" << endl;
+	cout << "4. MULTIPLICAR ENTEROS" << endl;
+	cout << "5. ORDENAR" << endl;
+	cout << "6. TRANSPUESTA" << endl;
+	cout << "7. INVERSA" << endl;
+    cout << "8. Salir\n";
+    
+}
+
