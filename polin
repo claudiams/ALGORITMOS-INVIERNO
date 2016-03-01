@@ -17,6 +17,9 @@ using namespace std;
 void MENU ();
 void cargar_polinomio (float vector[], int &contador);
 void mostrar_polinomio (float polinomio[], int contador);
+void ElimDig_V(float a[],int &n,float k);
+void inicializar_vector0(float vector[], int contador);
+void unir_vector(float a[], float b[],float c[], int n, int m);
 void SUMA();
 void suma_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_suma[], int contador1, int contador2, int &contador3);
 void resta_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_resta[], int contador1, int contador2, int &contador3);
@@ -33,7 +36,7 @@ void integrar_polinomio(float polinomio_1[NMAX], int contador1);
 void INTEGRAR();
 void ordenar_polinomio(float polinomio_1[NMAX], int contador1);
 void ORDENAR();
-void evaluar_polinomio(float polinomio_1[NMAX], int contador1, float variable);
+void evaluar_polinomio(float polinomio_1[NMAX], int contador1, float &acum, float variable);
 void EVALUAR();
 
 
@@ -92,7 +95,7 @@ int main ()
                 
                 break;
                 
-
+                
             case 9 :
                 EVALUAR();
                 
@@ -102,7 +105,7 @@ int main ()
             case 10 :
                 break;
                 
-
+                
             default:
                 cout << "Salir" << endl;
                 break;
@@ -170,38 +173,39 @@ void SUMA()
 
 void suma_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_suma[], int contador1, int contador2, int &contador3)
 {
-    int i=1, k=1;
-    contador3 = 0;
-    polinomio_suma[NMAX]= {0.0};
+    int i=1;
+    unir_vector(polinomio_1, polinomio_2, polinomio_suma, contador1, contador2);
+    contador3 = contador1+contador2-1;
     while(i<contador1)
     {
-        int j=1;
-        while(j<contador2)
+        int j = contador1;
+        while(j<contador3)
         {
-            if (polinomio_1[i+1]==polinomio_2[j+1])
+            if(polinomio_suma[i+1]==polinomio_suma[j+1])
+                
             {
-                polinomio_suma[i+1] = polinomio_1[i+1];
-                polinomio_suma[i]=polinomio_1[i]+polinomio_2[j];
-                contador3+=2;
+                polinomio_suma[i]=polinomio_suma[i]+polinomio_suma[j];
+                polinomio_suma[j]=0.0;
+                polinomio_suma[j+1]=0.0;
             }
             j+=2;
-            
         }
         
-        
-        if(polinomio_suma[k]==0.0)
-        {
-            polinomio_suma[k] = polinomio_1[i];
-            k++;
-            polinomio_suma[k] = polinomio_1[i+1];
-            k++;
-            contador3+=2;
-        }
         
         i+=2;
     }
-    polinomio_suma[0] = (contador3/2)+1;
     
+    i=1;
+    while(i<contador3)
+        
+    {
+        if(polinomio_suma[i]==0.0)
+        {
+            polinomio_suma[i]= polinomio_suma[i+2];
+            contador3-=2;
+        }
+        i++;
+    }
 }
 
 
@@ -214,7 +218,10 @@ void division_polinomios (float polinomio_1[], float polinomio_2[], float polino
     while(i<contador1)
     {
         int j=1;
-        float polinomio_resta[NMAX]={0.0}, polinomio_mult[NMAX]{0.0};
+        float polinomio_resta[NMAX], polinomio_mult[NMAX];
+        inicializar_vector0(polinomio_resta, NMAX);
+        inicializar_vector0(polinomio_mult, NMAX);
+                                                    
         while(j<contador2)
         {
             polinomio_div[i] = (polinomio_1[i])/(polinomio_2[i]);
@@ -235,7 +242,7 @@ void division_polinomios (float polinomio_1[], float polinomio_2[], float polino
             
         }
         
-       i+=2;
+        i+=2;
         
         
         
@@ -248,14 +255,14 @@ void division_polinomios (float polinomio_1[], float polinomio_2[], float polino
 void mostrar_polinomio (float polinomio[], int contador)
 {
     int i=1;
-    while(i<= contador)
+    while(i<contador)
     {
-        if(polinomio[i]!=1)
+        if(polinomio[i]!=1.0)
             cout << polinomio[i];
-    
+        
         cout<< "x^"<< polinomio[i+1];
         
-        if((i!=contador-1)&&(polinomio[i+1]>0))
+        if((i!=contador-2)&&(polinomio[i]>(0.0)))
             cout << "+";
         i+=2;
     }
@@ -282,7 +289,7 @@ void resta_polinomios (float polinomio_1[NMAX], float polinomio_2[NMAX], float p
 {
     int i=1, k=1;
     contador3 = 0;
-    polinomio_resta[NMAX]= {0.0};
+    inicializar_vector0(polinomio_resta, NMAX);
     while(i<contador1)
     {
         int j=1;
@@ -319,7 +326,7 @@ void multiplicar_polinomios (float polinomio_1[], float polinomio_2[], float pol
 {
     int i=1;
     contador3 = 0;
- 
+    
     while(i<contador1)
     {
         int j=1;
@@ -331,7 +338,7 @@ void multiplicar_polinomios (float polinomio_1[], float polinomio_2[], float pol
             contador3+=2;
             j+=2;
         }
-    
+        
         i+=2;
     }
     polinomio_mult[0] = (contador3/2)+1;
@@ -346,7 +353,7 @@ void MULTIPLICACION ()
     cargar_polinomio(polinomio_2, contador2);
     multiplicar_polinomios(polinomio_1, polinomio_2, polinomio_mult, contador1, contador2, contador3);
     mostrar_polinomio(polinomio_mult, contador3);
-
+    
     
 }
 
@@ -371,10 +378,10 @@ void multiplicar_esc_polim (float polinomio_1[], float polinomio_mult_esc_pol[],
     
     while(i<contador1)
     {
-            polinomio_mult_esc_pol[i+1] = polinomio_1[i+1]+escalar;
-            polinomio_mult_esc_pol[i]=polinomio_1[i];
-            contador3+=2;
-       
+        polinomio_mult_esc_pol[i+1] = polinomio_1[i+1]+escalar;
+        polinomio_mult_esc_pol[i]=polinomio_1[i];
+        contador3+=2;
+        
         i+=2;
     }
     polinomio_mult_esc_pol[0] = (contador3/2)+1;
@@ -383,7 +390,7 @@ void multiplicar_esc_polim (float polinomio_1[], float polinomio_mult_esc_pol[],
 
 void MULTIPLICACION_ESCALAR()
 {
-     float polinomio_1[NMAX], polinomio_mult_esc_pol[NMAX]; int contador1, contador3, escalar;
+    float polinomio_1[NMAX], polinomio_mult_esc_pol[NMAX]; int contador1, contador3, escalar;
     cargar_polinomio(polinomio_1, contador1);
     cout << "Ingrese el numero entero: ";
     cin >> escalar;
@@ -400,7 +407,7 @@ void derivar_polinomio (float polinomio_1[NMAX], int contador1)
     {
         polinomio_1[i]*=polinomio_1[i+1];
         polinomio_1[i+1]-=1;
-        i++;
+        i+=2;
         
     }
     
@@ -424,7 +431,7 @@ void integrar_polinomio(float polinomio_1[NMAX], int contador1)
     {
         polinomio_1[i]/=polinomio_1[i+1];
         polinomio_1[i+1]+=1;
-        i++;
+        i+=2;
         
     }
     
@@ -444,19 +451,19 @@ void ordenar_polinomio(float polinomio_1[NMAX], int contador1)
     int i=1;
     while (i<contador1)
     {
-        int j=3;
+        int j=1;
         while(j<contador1)
         {
-            if(polinomio_1[i+1]<polinomio_1[j+1])
+            if(polinomio_1[i+1]>polinomio_1[j+1])
             {
                 swap(polinomio_1[i], polinomio_1[j]);
                 swap(polinomio_1[i+1], polinomio_1[j+1]);
             }
-            j++;
-       
-        
+            j+=2;
+            
+            
         }
-        i++;
+        i+=2;
     }
     
 }
@@ -470,29 +477,75 @@ void ORDENAR()
     
 }
 
-void evaluar_polinomio(float polinomio_1[NMAX], int contador1, float variable)
+void evaluar_polinomio(float polinomio_1[NMAX], int contador1, float &acum, float variable)
 
 {
+    acum=0;
     int i=1;
     while (i<contador1)
     {
-       
-            if(polinomio_1[i+1]>0)
-            {
-                powf((polinomio_1[i]*variable), polinomio_1[i+1]);
-                i++;
-            }
         
-        i++;
+            acum+=polinomio_1[i]*(powf(variable, polinomio_1[i+1]));
+            i+=2;
+      
+        
     }
     
 }
 
 void EVALUAR()
 {
-    float polinomio_1[NMAX]; int  contador1 ,variable;
+    float polinomio_1[NMAX], variable, acum;
+    int  contador1 ;
     cargar_polinomio(polinomio_1, contador1);
-    evaluar_polinomio(polinomio_1, contador1,variable);
-    mostrar_polinomio(polinomio_1, contador1);
+    cout << "Ingrese la variable a reemplazar: ";
+    
+    cin >> variable;
+    evaluar_polinomio(polinomio_1, contador1,acum,variable);
+    cout << acum;
+}
+
+void ElimDig_V(float a[],int &n,float k)
+{
+    for(int i=0;i<n;i++)
+        if(a[i]==k)
+        {
+            n--;
+            for(int j=i;j<n;j++)
+            {
+                a[j]=a[j+1];
+            }
+        }
+    
+}
+
+void unir_vector(float a[], float b[],float c[], int n, int m)
+{
+    int i=1;
+    while(i<n)
+    {
+        c[i] = a[i];
+        i++;
+    }
+    i=1;
+    int j = n;
+    while(j<n+m-1)
+    {
+        c[j] = b[i];
+        i++;
+        j++;
+        
+    }
+    c[0] = a[0]+b[0];
+}
+void inicializar_vector0(float vector[], int contador)
+{
+    int i=0;
+    while(i<contador)
+    {
+        vector[i] = 0.0;
+        i++;
+    }
+    
 }
 
