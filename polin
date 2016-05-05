@@ -1,551 +1,125 @@
-//
-// Nombre: Claudia Andrea Martinez Salazar
-// No Reg: 2014116865
-// Fecha : 26/02/2016
-/* Ejercicio 6.1 Escribir un programa qu elea 2 numeros de 3 cifras y a continuaciojn calular y viaualizar el proucto el cociente y el residuo*/
-#include <iostream>
-#include "stdio.h"
-#include "math.h"
-#define NMAX 20
+#include "listaEstudiante.h"
 
-
-using namespace std;
-
-
-
-
-void MENU ();
-void cargar_polinomio (float vector[], int &contador);
-void mostrar_polinomio (float polinomio[], int contador);
-void ElimDig_V(float a[],int &n,float k);
-void inicializar_vector0(float vector[], int contador);
-void unir_vector(float a[], float b[],float c[], int n, int m);
-void SUMA();
-void suma_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_suma[], int contador1, int contador2, int &contador3);
-void resta_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_resta[], int contador1, int contador2, int &contador3);
-void RESTA();
-void multiplicar_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_mult[], int contador1, int contador2, int &contador3);
-void MULTIPLICACION ();
-void division_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_div[], int contador1, int contador2, int &contador3);
-void DIVISION();
-void multiplicar_esc_polim (float polinomio_1[], float polinomio_mult_esc_pol[], int contador1, int contador3, float escalar);
-void MULTIPLICACION_ESCALAR();
-void derivar_polinomio (float polinomio_1[NMAX], int contador1);
-void DERIVAR();
-void integrar_polinomio(float polinomio_1[NMAX], int contador1);
-void INTEGRAR();
-void ordenar_polinomio(float polinomio_1[NMAX], int contador1);
-void ORDENAR();
-void evaluar_polinomio(float polinomio_1[NMAX], int contador1, float &acum, float variable);
-void EVALUAR();
-
-
-
-int main ()
+estudiante listaEstudiante::getElementoLista(int n)
 {
-    
-    int opc;
-    do
-    {
-        MENU();
-        cout << "Digite la opcion: ";
-        cin >> opc;
-        switch (opc)
-        {
-            case 1 :
-                SUMA();
-                break;
-                
-            case 2 :
-                RESTA();
-                
-                break;
-                
-            case 3 :
-                MULTIPLICACION();
-                
-                break;
-                
-            case 4 :
-                DIVISION();
-                
-                break;
-                
-                
-            case 5 :
-                MULTIPLICACION_ESCALAR();
-                
-                
-                
-            case 6 :
-                DERIVAR();
-                
-                
-                break;
-                
-            case 7 :
-                INTEGRAR();
-                
-                
-                break;
-                
-            case 8 :
-                ORDENAR();
-                
-                
-                break;
-                
-                
-            case 9 :
-                EVALUAR();
-                
-                
-                break;
-                
-            case 10 :
-                break;
-                
-                
-            default:
-                cout << "Salir" << endl;
-                break;
-        }
-        getchar();
-        
-        
-    }while(opc!=10);
-    
-    
-    return 0;
+	return lista[n];
 }
 
-
-void MENU ()
+void listaEstudiante::setElementoLista(estudiante E, int n)
 {
-    cout << "\nMENU\n";
-    cout << "----\n";
-    cout << "1. SUMAR" << endl;
-    cout << "2. RESTAR" << endl;
-    cout << "3. MULTIPLICAR" << endl;
-    cout << "4. DIVIDIR" << endl;
-    cout << "5. MULTIPLICAR POR ESCALAR" << endl;
-    cout << "6. DERIVAR" << endl;
-    cout << "7. INTEGRAR" << endl;
-    cout << "8. ORDENAR" << endl;
-    cout << "9. EVALUAR " << endl;
-    cout << "10. Salir\n";
-    
+	lista[n] = E;
+}
+	
+int listaEstudiante::buscarElementoLista(estudiante E, tipoOrden tipo,listaEstudiante &LE)
+{
+	int i,j;
+	bool comparacion= false;
+	estudiante aux;
+	i = 0;
+
+	
+		while(j < getTamanioListaEstudiante() - 1)
+		{
+			switch(tipo)
+			{
+			case APELLIDO:
+				comparacion = E.getApellido()==getElementoLista(i).getApellido();
+				break;
+			
+			case NOMBRE:
+				comparacion = E.getNombre()<=getElementoLista(i).getNombre();
+			break;
+			case REGISTRO:
+				comparacion =E.getNumeroRegistro() <= getElementoLista(i).getNumeroRegistro();
+			break;
+
+			case EDAD:
+
+				comparacion =E.getEdad() >= getElementoLista(i).getEdad();
+				break;
+	
+			case CARNET:
+				comparacion =E.getCarnetIdentidad() >= getElementoLista(i).getCarnetIdentidad();
+			break;
+	
+			case IDENT:
+				comparacion=E.getIdentificacion() >= getElementoLista(i).getIdentificacion();
+				break;
+			}
+
+			if(comparacion == true)
+			{
+				
+				LE.setElementoLista(getElementoLista(i),LE.getTamanioListaEstudiante() );
+				
+			}
+			i++;
+			
+		
+	   }
+	if(E.getNumeroRegistro() == getElementoLista(i).getNumeroRegistro()) return i;
+	else return -1;
 }
 
-
-void cargar_polinomio (float vector[], int &contador)
+void listaEstudiante::ordenarLista(tipoOrden tipo)
 {
-    int i=1;
-    contador =1;
-    
-    cout <<"Ingrese la cantidad de terminos del polinomio: ";
-    cin >> vector[0];
-    
-    cout << "Ingrese el coeficiente y exponente de cada termino: ";
-    
-    while(i<=((vector[0])*2))
-        
-    {
-        cin >> vector [i];
-        contador++;
-        i++;
-    }
-    
+	int i, j;
+	estudiante aux;
+	bool comparacion;
+
+	i = 0;
+
+	while(i < getTamanioListaEstudiante())
+	{
+		j = 0;
+
+		while(j < getTamanioListaEstudiante() - 1)
+		{
+			switch(tipo)
+			{
+			case APELLIDO:
+				comparacion = getElementoLista(j).getApellido()<=getElementoLista(j+1).getApellido();
+				break;
+			
+			case NOMBRE:
+				comparacion = getElementoLista(j).getNombre()<=getElementoLista(j+1).getNombre();
+			break;
+			case REGISTRO:
+				comparacion =getElementoLista(j).getNumeroRegistro() <= getElementoLista(j+1).getNumeroRegistro();
+			break;
+
+			case EDAD:
+
+				comparacion =getElementoLista(j).getEdad() >= getElementoLista(j+1).getEdad();
+				break;
+	
+			case CARNET:
+				comparacion =getElementoLista(j).getCarnetIdentidad() >= getElementoLista(j+1).getCarnetIdentidad();
+			break;
+	
+			case IDENT:
+				comparacion=getElementoLista(j).getIdentificacion() >= getElementoLista(j+1).getIdentificacion();
+				break;
+			}
+
+			if(comparacion == true)
+			{
+				aux = getElementoLista(j);
+				setElementoLista(getElementoLista(j + 1), j);
+				setElementoLista(aux, j + 1);
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
-void SUMA()
+int listaEstudiante::getTamanioListaEstudiante()
 {
-    float polinomio_1[NMAX], polinomio_2[NMAX],polinomia_suma[NMAX];
-    int contador1,contador2,contador3;
-    
-    cargar_polinomio(polinomio_1,contador1);
-    cargar_polinomio(polinomio_2,contador2);
-    suma_polinomios(polinomio_1, polinomio_2, polinomia_suma, contador1, contador2, contador3);
-    mostrar_polinomio(polinomia_suma, contador3);
-    
-    
+	return Tamanio;
 }
 
-void suma_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_suma[], int contador1, int contador2, int &contador3)
+void listaEstudiante::setTamanioListaEstudiante(int n)
 {
-    int i=1;
-    unir_vector(polinomio_1, polinomio_2, polinomio_suma, contador1, contador2);
-    contador3 = contador1+contador2-1;
-    while(i<contador1)
-    {
-        int j = contador1;
-        while(j<contador3)
-        {
-            if(polinomio_suma[i+1]==polinomio_suma[j+1])
-                
-            {
-                polinomio_suma[i]=polinomio_suma[i]+polinomio_suma[j];
-                polinomio_suma[j]=0.0;
-                polinomio_suma[j+1]=0.0;
-            }
-            j+=2;
-        }
-        
-        
-        i+=2;
-    }
-    
-    i=1;
-    while(i<contador3)
-        
-    {
-        if(polinomio_suma[i]==0.0)
-        {
-            polinomio_suma[i]= polinomio_suma[i+2];
-            contador3-=2;
-        }
-        i++;
-    }
+	Tamanio = n;
 }
-
-
-void division_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_div[],  int contador1, int contador2, int &contador3)
-{
-    
-    int i=1;
-    contador3 = 0;
-    int contador4=0;
-    while(i<contador1)
-    {
-        int j=1;
-        float polinomio_resta[NMAX], polinomio_mult[NMAX];
-        inicializar_vector0(polinomio_resta, NMAX);
-        inicializar_vector0(polinomio_mult, NMAX);
-                                                    
-        while(j<contador2)
-        {
-            polinomio_div[i] = (polinomio_1[i])/(polinomio_2[i]);
-            polinomio_div[i+1]= polinomio_1[i+1] - polinomio_2[i+1];
-            j+=2;
-            contador3+=2;
-            multiplicar_polinomios(polinomio_div, polinomio_2, polinomio_mult, contador3, contador2, contador2);
-            resta_polinomios(polinomio_1, polinomio_mult, polinomio_resta, contador1, contador2, contador4);
-            int k=0;
-            while (k<contador4)
-            {
-                polinomio_1[k] = polinomio_resta[k];
-                k++;
-            }
-            contador1 = contador4;
-            
-            
-            
-        }
-        
-        i+=2;
-        
-        
-        
-    }
-    polinomio_div[0] = (contador3/2)+1;
-    
-}
-
-
-void mostrar_polinomio (float polinomio[], int contador)
-{
-    int i=1;
-    while(i<contador)
-    {
-        if(polinomio[i]!=1.0)
-            cout << polinomio[i];
-        
-        cout<< "x^"<< polinomio[i+1];
-        
-        if((i!=contador-2)&&(polinomio[i]>(0.0)))
-            cout << "+";
-        i+=2;
-    }
-    
-}
-
-
-void RESTA()
-
-{
-    float polinomio_1[NMAX], polinomio_2[NMAX], polinomio_resta[NMAX]; int contador1, contador2, contador3;
-    
-    cargar_polinomio(polinomio_1, contador1);
-    cargar_polinomio(polinomio_2, contador2);
-    resta_polinomios(polinomio_1, polinomio_2, polinomio_resta,contador1, contador2, contador3);
-    mostrar_polinomio(polinomio_resta, contador3);
-    
-    
-    
-}
-
-
-void resta_polinomios (float polinomio_1[NMAX], float polinomio_2[NMAX], float polinomio_resta[NMAX], int contador1, int contador2, int &contador3)
-{
-    int i=1, k=1;
-    contador3 = 0;
-    inicializar_vector0(polinomio_resta, NMAX);
-    while(i<contador1)
-    {
-        int j=1;
-        while(j<contador2)
-        {
-            if (polinomio_1[i+1]==polinomio_2[j+1])
-            {
-                polinomio_resta[i+1] = polinomio_1[i+1];
-                polinomio_resta[i]=polinomio_1[i]-polinomio_2[j];
-                contador3+=2;
-            }
-            j+=2;
-            
-        }
-        
-        
-        if(polinomio_resta[k]==0)
-        {
-            polinomio_resta[k] = polinomio_1[i];
-            k++;
-            polinomio_resta[k] = polinomio_1[i+1];
-            k++;
-            contador3+=2;
-        }
-        
-        i+=2;
-    }
-    polinomio_resta[0] = (contador3/2)+1;
-    
-}
-
-
-void multiplicar_polinomios (float polinomio_1[], float polinomio_2[], float polinomio_mult[], int contador1, int contador2, int &contador3)
-{
-    int i=1;
-    contador3 = 0;
-    
-    while(i<contador1)
-    {
-        int j=1;
-        while(j<contador2)
-        {
-            
-            polinomio_mult[i+1] = polinomio_1[i+1]+polinomio_2[j+1];
-            polinomio_mult[i]=polinomio_1[i]*polinomio_2[j];
-            contador3+=2;
-            j+=2;
-        }
-        
-        i+=2;
-    }
-    polinomio_mult[0] = (contador3/2)+1;
-    
-}
-
-void MULTIPLICACION ()
-{
-    float polinomio_1[NMAX], polinomio_2[NMAX], polinomio_mult[NMAX]; int contador1, contador2, contador3;
-    
-    cargar_polinomio(polinomio_1,contador1);
-    cargar_polinomio(polinomio_2, contador2);
-    multiplicar_polinomios(polinomio_1, polinomio_2, polinomio_mult, contador1, contador2, contador3);
-    mostrar_polinomio(polinomio_mult, contador3);
-    
-    
-}
-
-void DIVISION()
-{
-    float polinomio_1[NMAX], polinomio_2[NMAX], polinomio_div[NMAX];
-    int contador1, contador2, contador3;
-    
-    cargar_polinomio(polinomio_1, contador1);
-    cargar_polinomio(polinomio_2, contador2);
-    division_polinomios(polinomio_1, polinomio_2, polinomio_div, contador1, contador2, contador3);
-    mostrar_polinomio(polinomio_div, contador3);
-    
-}
-
-
-
-void multiplicar_esc_polim (float polinomio_1[], float polinomio_mult_esc_pol[], int contador1, int contador3, float escalar)
-{
-    int i=1;
-    contador3 = 0;
-    
-    while(i<contador1)
-    {
-        polinomio_mult_esc_pol[i+1] = polinomio_1[i+1]+escalar;
-        polinomio_mult_esc_pol[i]=polinomio_1[i];
-        contador3+=2;
-        
-        i+=2;
-    }
-    polinomio_mult_esc_pol[0] = (contador3/2)+1;
-    
-}
-
-void MULTIPLICACION_ESCALAR()
-{
-    float polinomio_1[NMAX], polinomio_mult_esc_pol[NMAX]; int contador1, contador3, escalar;
-    cargar_polinomio(polinomio_1, contador1);
-    cout << "Ingrese el numero entero: ";
-    cin >> escalar;
-    multiplicar_esc_polim(polinomio_1, polinomio_mult_esc_pol, contador1, contador3, escalar);
-    mostrar_polinomio(polinomio_mult_esc_pol, contador3);
-    
-    
-}
-
-void derivar_polinomio (float polinomio_1[NMAX], int contador1)
-{
-    int i=1;
-    while (i<contador1)
-    {
-        polinomio_1[i]*=polinomio_1[i+1];
-        polinomio_1[i+1]-=1;
-        i+=2;
-        
-    }
-    
-}
-
-void DERIVAR()
-{
-    float polinomio_1[NMAX];
-    int contador1;
-    cargar_polinomio(polinomio_1, contador1);
-    derivar_polinomio(polinomio_1, contador1);
-    mostrar_polinomio(polinomio_1,contador1);
-    
-}
-
-void integrar_polinomio(float polinomio_1[NMAX], int contador1)
-
-{
-    int i=1;
-    while (i<contador1)
-    {
-        polinomio_1[i]/=polinomio_1[i+1];
-        polinomio_1[i+1]+=1;
-        i+=2;
-        
-    }
-    
-}
-void INTEGRAR()
-{
-    float polinomio_1[NMAX]; int  contador1;
-    cargar_polinomio(polinomio_1, contador1);
-    integrar_polinomio(polinomio_1, contador1);
-    mostrar_polinomio(polinomio_1, contador1);
-    
-}
-
-void ordenar_polinomio(float polinomio_1[NMAX], int contador1)
-
-{
-    int i=1;
-    while (i<contador1)
-    {
-        int j=1;
-        while(j<contador1)
-        {
-            if(polinomio_1[i+1]>polinomio_1[j+1])
-            {
-                swap(polinomio_1[i], polinomio_1[j]);
-                swap(polinomio_1[i+1], polinomio_1[j+1]);
-            }
-            j+=2;
-            
-            
-        }
-        i+=2;
-    }
-    
-}
-
-void ORDENAR()
-{
-    float polinomio_1[NMAX]; int  contador1;
-    cargar_polinomio(polinomio_1, contador1);
-    ordenar_polinomio(polinomio_1, contador1);
-    mostrar_polinomio(polinomio_1, contador1);
-    
-}
-
-void evaluar_polinomio(float polinomio_1[NMAX], int contador1, float &acum, float variable)
-
-{
-    acum=0;
-    int i=1;
-    while (i<contador1)
-    {
-        
-            acum+=polinomio_1[i]*(powf(variable, polinomio_1[i+1]));
-            i+=2;
-      
-        
-    }
-    
-}
-
-void EVALUAR()
-{
-    float polinomio_1[NMAX], variable, acum;
-    int  contador1 ;
-    cargar_polinomio(polinomio_1, contador1);
-    cout << "Ingrese la variable a reemplazar: ";
-    
-    cin >> variable;
-    evaluar_polinomio(polinomio_1, contador1,acum,variable);
-    cout << acum;
-}
-
-void ElimDig_V(float a[],int &n,float k)
-{
-    for(int i=0;i<n;i++)
-        if(a[i]==k)
-        {
-            n--;
-            for(int j=i;j<n;j++)
-            {
-                a[j]=a[j+1];
-            }
-        }
-    
-}
-
-void unir_vector(float a[], float b[],float c[], int n, int m)
-{
-    int i=1;
-    while(i<n)
-    {
-        c[i] = a[i];
-        i++;
-    }
-    i=1;
-    int j = n;
-    while(j<n+m-1)
-    {
-        c[j] = b[i];
-        i++;
-        j++;
-        
-    }
-    c[0] = a[0]+b[0];
-}
-void inicializar_vector0(float vector[], int contador)
-{
-    int i=0;
-    while(i<contador)
-    {
-        vector[i] = 0.0;
-        i++;
-    }
-    
-}
-
