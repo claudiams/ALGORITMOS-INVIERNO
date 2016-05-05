@@ -1,30 +1,113 @@
-#include "materia.h"
-const int TAMEST = 20;
+#include "listaMateria.h"
 
-enum tipoOrden
+
+listaMateria::listaMateria(void)
 {
-	NOMBRE = 1,
-	DESCRIPCION=2,
-	CODIGO=3
+}
 
-};
-class listaMateria
+
+listaMateria::~listaMateria(void)
 {
-private:
-	materia lista[TAMEST];
-	int Tamanio;
+}
+materia listaMateria::getElementoLista(int n)
+{
+	return lista[n];
+}
 
-public:
-	listaMateria(void);
-	~listaMateria(void);
-	materia getElementoLista(int n);
-	void setElementoLista(materia E, int n);
+void listaMateria::setElementoLista(materia E, int n)
+{
+	lista[n] = E;
+}
 	
-    bool buscarElementoLista(materia M, tipoOrden tipo,listaMateria& LM);
-	void ordenarLista(tipoOrden tipo);
+bool listaMateria:: buscarElementoLista(materia M, tipoOrden tipo,listaMateria& LM)
+{
+	int i,j;
+	bool comparacion= false;
+    Tamanio = 0;
+	i = 0;
 
-	int getTamanioListaMateria();
-	void setTamanioListaMateria(int n);
-};
+	
+		while(i < getTamanioListaMateria())
+		{
+            switch (tipo) {
+                case   NOMBRE:
+                    comparacion = getElementoLista(j).getNombre() ==getElementoLista(j+1).getNombre();
+                    break;
+                    
+                case DESCRIPCION:
+                    comparacion = getElementoLista(j).getDescripcion()==getElementoLista(j+1).getDescripcion();
+                    break;
+                case CODIGO:
+                    comparacion =getElementoLista(j).getCodigo()== getElementoLista(j+1).getCodigo();
+                    break;
+                    
+                default:
+                    break;
+            }
+			if(comparacion)
+			{
+                LM.setElementoLista(getElementoLista(i), LM.getTamanioListaMateria());
+                Tamanio++;
+			}
+			i++;
+		}
+    if(Tamanio < 0)
+        return false;
+    else
+        return true;
+			
+		
+}
 
 
+void listaMateria::ordenarLista(tipoOrden tipo)
+{
+	int i, j;
+	materia aux;
+	bool comparacion;
+
+	i = 0;
+
+	while(i < Tamanio)
+	{
+		j = 0;
+
+		while(j < getTamanioListaMateria() - 1)
+		{
+			switch(tipo)
+			{
+			case   NOMBRE:
+				comparacion = getElementoLista(j).getNombre() ==getElementoLista(j+1).getNombre();
+				break;
+			
+			case DESCRIPCION:
+				comparacion = getElementoLista(j).getDescripcion()==getElementoLista(j+1).getDescripcion();
+			break;
+			case CODIGO:
+				comparacion =getElementoLista(j).getCodigo()== getElementoLista(j+1).getCodigo();
+			break;
+
+        
+			}
+
+			if(comparacion == true)
+			{
+				aux = getElementoLista(j);
+				setElementoLista(getElementoLista(j + 1), j);
+				setElementoLista(aux, j + 1);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+int listaMateria::getTamanioListaMateria()
+{
+	return Tamanio;
+}
+
+void listaMateria::setTamanioListaMateria(int n)
+{
+	Tamanio = n;
+}
